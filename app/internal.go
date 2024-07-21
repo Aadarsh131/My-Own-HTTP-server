@@ -37,8 +37,6 @@ Content-Length: 3\r\n         // Header that specifies the size of the response 
 abc                           // The string from the request
 */
 func checkEcho(conn net.Conn, buf []byte) {
-	// stringbuf := string(buf)
-	// fmt.Println([]byte(" "))
 	count := 0
 	var tempSlice []string
 	var tempString string
