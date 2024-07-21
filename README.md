@@ -36,3 +36,63 @@ Note: This section is for stages 2 and beyond.
    `app/server.go`.
 1. Commit your changes and run `git push origin master` to submit your solution
    to CodeCrafters. Test output will be streamed to your terminal.
+
+
+# 4. Respond with Body
+- example request- `GET /echo/abc HTTP/1.1\r\nHost: localhost:4221\r\nUser-Agent: curl/7.64.1\r\nAccept: */*\r\n\r\n`
+- example response- `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\nabc`
+
+
+> **Breakdown of response-** 
+>```go
+>// Status line  
+>HTTP/1.1 200 OK
+>\r\n                          // CRLF that marks the end of the status line
+>
+>// Headers
+>Content-Type: text/plain\r\n  // Header that specifies the format of the response body
+>Content-Length: 3\r\n         // Header that specifies the size of the response body, in bytes
+>\r\n                          // CRLF that marks the end of the headers
+>
+>// Response body
+>abc                           // The string from the request
+>```
+
+# 5. Read Header
+Expected Request-
+```go
+// Request line
+GET 
+/user-agent
+HTTP/1.1
+\r\n
+
+// Headers
+Host: localhost:4221\r\n
+User-Agent: foobar/1.2.3\r\n  // Read this value
+Accept: */*\r\n
+\r\n
+
+// Request body (empty)
+```
+
+Expected Response-
+```go
+// Status line
+HTTP/1.1 200 OK               // Status code must be 200
+\r\n
+
+// Headers
+Content-Type: text/plain\r\n
+Content-Length: 12\r\n
+\r\n
+
+// Response body
+foobar/1.2.3                  // The value of `User-Agent`
+```
+
+**Request**- ``$ curl -v --header "User-Agent: foobar/1.2.3" http://localhost:4221/user-agent
+``  
+
+**Expected response**- ``HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 12\r\n\r\nfoobar/1.2.3
+``

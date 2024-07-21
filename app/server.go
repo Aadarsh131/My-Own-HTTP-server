@@ -28,8 +28,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// checkBasic(conn, buf)
-	checkEcho(conn, buf)
-	conn.Close()
+	run(conn, buf)
 	// }
 }
