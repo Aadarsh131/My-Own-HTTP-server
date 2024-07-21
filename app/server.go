@@ -5,7 +5,6 @@ import (
 	"log"
 	"net"
 	"os"
-	"strings"
 )
 
 func main() {
@@ -29,13 +28,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	//localhost:4221/abcde returns 404 NOT FOUND,
-	//localhost:4221/ returns 200 OK
-	if strings.HasPrefix(string(buf), "GET / HTTP/1.1") {
-		conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
-	} else {
-		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
-	}
+	// checkBasic(conn, buf)
+	checkEcho(conn, buf)
 	conn.Close()
 	// }
 }
