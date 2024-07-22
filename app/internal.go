@@ -9,7 +9,6 @@ import (
 
 func run(conn net.Conn, buf []byte) {
 	//to fetch out 'str' out of "/echo/{str}"
-
 	req := string(buf)
 
 	sliceReq := strings.Split(req, " ")
