@@ -8,7 +8,7 @@ import (
 )
 
 func run(conn net.Conn, buf []byte) {
-	defer conn.Close()
+	// defer conn.Close()
 	//to fetch out 'str' out of "/echo/{str}"
 	for {
 		// time.Sleep(5 * time.Second)
@@ -18,13 +18,13 @@ func run(conn net.Conn, buf []byte) {
 		urlPath := sliceReq[1]
 		if urlPath == "/" {
 			conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
-			// conn.Close()
+			conn.Close()
 			return
 		}
 		if strings.HasPrefix(urlPath, "/echo/") {
 			str := strings.Split(urlPath, "/")[2]
 			conn.Write([]byte(fmt.Sprintf("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %d\r\n\r\n%s", len(str), str)))
-			// conn.Close()
+			conn.Close()
 			return
 		}
 		if strings.Contains(req, "/user-agent") {
@@ -34,11 +34,11 @@ func run(conn net.Conn, buf []byte) {
 			if len(matches) > 1 {
 				// The captured group is in the second element of the slice
 				conn.Write([]byte(fmt.Sprintf("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %d\r\n\r\n%s", len(userAgentValue), userAgentValue)))
-				// conn.Close()
+				conn.Close()
 			}
 			return
 		}
 		conn.Write([]byte("HTTP/1.1 404 Not Found\r\n\r\n"))
-		// conn.Close()
+		conn.Close()
 	}
 }
