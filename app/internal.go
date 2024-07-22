@@ -5,11 +5,12 @@ import (
 	"net"
 	"regexp"
 	"strings"
+	"time"
 )
 
 func run(conn net.Conn, buf []byte) {
 	//to fetch out 'str' out of "/echo/{str}"
-
+	time.Sleep(4 * time.Second)
 	req := string(buf)
 
 	sliceReq := strings.Split(req, " ")
