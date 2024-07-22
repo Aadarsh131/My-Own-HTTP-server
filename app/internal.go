@@ -15,11 +15,13 @@ func run(conn net.Conn, buf []byte) {
 	urlPath := sliceReq[1]
 	if urlPath == "/" {
 		conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
+		conn.Close()
 		return
 	}
 	if strings.HasPrefix(urlPath, "/echo/") {
 		str := strings.Split(urlPath, "/")[2]
 		conn.Write([]byte(fmt.Sprintf("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %d\r\n\r\n%s", len(str), str)))
+		conn.Close()
 		return
 	}
 	if strings.Contains(req, "/user-agent") {
@@ -29,6 +31,7 @@ func run(conn net.Conn, buf []byte) {
 		if len(matches) > 1 {
 			// The captured group is in the second element of the slice
 			conn.Write([]byte(fmt.Sprintf("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: %d\r\n\r\n%s", len(userAgentValue), userAgentValue)))
+			conn.Close()
 		}
 		return
 	}
