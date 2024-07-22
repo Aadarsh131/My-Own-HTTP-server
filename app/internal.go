@@ -18,6 +18,7 @@ func run(conn net.Conn, buf []byte) {
 		urlPath := sliceReq[1]
 		if urlPath == "/" {
 			conn.Write([]byte("HTTP/1.1 200 OK\r\n\r\n"))
+			fmt.Print("HTTP/1.1 200 OK\r\n\r\n")
 			conn.Close()
 			return
 		}
